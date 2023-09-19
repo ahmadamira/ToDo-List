@@ -132,16 +132,18 @@ function markDone(button) {
 
 function deleteTask(button) {
   const row = button.closest("tr");
-  row.remove();
-
   const taskId = parseInt(row.cells[0].textContent);
   const taskIndex = taskListArray.findIndex((task) => task.id === taskId);
-  if (taskIndex !== -1) {
-    taskListArray.splice(taskIndex, 1);
 
-    sessionStorage.setItem("taskListArray", JSON.stringify(taskListArray));
+  const confirmed = confirm("Are you sure you want to delete this TODO?");
+  if (confirmed) {
+    row.remove();
+    if (taskIndex !== -1) {
+      taskListArray.splice(taskIndex, 1);
+      sessionStorage.setItem("taskListArray", JSON.stringify(taskListArray));
+      updateTotalTodosCount();
+    }
   }
-  updateTotalTodosCount();
 }
 
 function searchTask() {
