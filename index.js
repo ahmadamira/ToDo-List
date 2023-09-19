@@ -23,6 +23,7 @@ function loadTasksFromSessionStorage() {
 
 window.onload = () => {
   loadTasksFromSessionStorage();
+  updateTotalTodosCount();
 };
 
 async function fetchTasksFromAPI() {
@@ -61,6 +62,7 @@ async function fetchTasksFromAPI() {
 
     sessionStorage.setItem("taskId", taskId);
     sessionStorage.setItem("taskListArray", JSON.stringify(taskListArray));
+    updateTotalTodosCount();
   } catch (error) {
     console.error("Error fetching tasks:", error);
   }
@@ -109,6 +111,8 @@ function addTask() {
 
     taskId++;
     taskInput.value = "";
+
+    updateTotalTodosCount();
   }
 }
 
@@ -123,6 +127,7 @@ function markDone(button) {
 
     sessionStorage.setItem("taskListArray", JSON.stringify(taskListArray));
   }
+  updateTotalTodosCount();
 }
 
 function deleteTask(button) {
@@ -136,6 +141,7 @@ function deleteTask(button) {
 
     sessionStorage.setItem("taskListArray", JSON.stringify(taskListArray));
   }
+  updateTotalTodosCount();
 }
 
 function searchTask() {
@@ -153,4 +159,10 @@ function searchTask() {
       rows[i].style.display = "none";
     }
   }
+}
+
+function updateTotalTodosCount() {
+  const totalTodos = taskListArray.length;
+  const totalTodosElement = document.getElementById("totalTodos");
+  totalTodosElement.textContent = totalTodos.toString();
 }
