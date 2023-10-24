@@ -17,7 +17,6 @@ function loadTasksFromSessionStorage() {
             <button class="delete-button" onclick="deleteTask(this)">Delete</button>
         </td>
     `;
-    taskId = Math.max(taskId, task.id + 1);
   });
 }
 
@@ -30,9 +29,6 @@ async function fetchTasksFromAPI() {
   try {
     const response = await fetch("https://dummyjson.com/todos");
     const tasks = await response.json();
-
-    console.log(tasks);
-
     const taskList = document.getElementById("taskList");
 
     tasks.todos.forEach((task) => {
@@ -87,7 +83,7 @@ function addTask() {
     const newRow = taskList.insertRow();
 
     const task = {
-      id: taskId,
+      id: taskListArray.length + 1,
       description: todoDescription,
       userId: 1,
       status: "Pending",
@@ -95,11 +91,10 @@ function addTask() {
 
     taskListArray.push(task);
 
-    sessionStorage.setItem("taskId", taskId);
     sessionStorage.setItem("taskListArray", JSON.stringify(taskListArray));
 
     newRow.innerHTML = `
-        <td>${taskId}</td>
+        <td>${task.id}</td>
         <td>${todoDescription}</td>
         <td>1</td>
         <td>Pending</td>
@@ -109,7 +104,6 @@ function addTask() {
         </td>
       `;
 
-    taskId++;
     taskInput.value = "";
 
     updateTotalTodosCount();
@@ -150,17 +144,12 @@ function searchTask() {
   const searchInput = document.getElementById("searchInput");
   const searchText = searchInput.value.toLowerCase().trim();
   const taskList = document.getElementById("taskList");
-  const rows = taskList.getElementsByTagName("tr");
+  const rows = Array.from(taskList.getElementsByTagName("tr"));
 
-  for (let i = 0; i < rows.length; i++) {
-    const taskDescription = rows[i].cells[1].textContent.toLowerCase();
-
-    if (taskDescription.includes(searchText)) {
-      rows[i].style.display = "";
-    } else {
-      rows[i].style.display = "none";
-    }
-  }
+  rows.forEach((row) => {
+    const taskDescription = row.cells[1].textContent.toLowerCase();
+    row.style.display = taskDescription.includes(searchText) ? "" : "none";
+  });
 }
 
 function updateTotalTodosCount() {

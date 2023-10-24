@@ -23,7 +23,8 @@ h1 {
   margin-bottom: 20px;
 }
 
-.input-group input[type="text"] {
+.input-group input[type="text"],
+.input-group input[type="search"] {
   flex: 1;
   padding: 10px;
 }
