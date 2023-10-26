@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO LIST</title>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>TODO LIST</h1>
+      </header>
+
+      <main>
+        <section class="input-group">
+          <input type="text" id="taskInput" placeholder="Add a new task" />
+          <button onclick="addTask()">Add Task</button>
+        </section>
+        <section class="input-group">
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search for a task"
+          />
+          <button onclick="searchTask()">Search</button>
+        </section>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Todo Description</th>
+              <th>User ID</th>
+              <th>Status</th>
+              <th>Todo Action</th>
+            </tr>
+          </thead>
+          <tbody id="taskList"></tbody>
+        </table>
+      </main>
+
+      <footer class="footer">
+        <p>Total TODOs: <span id="totalTodos">0</span></p>
+      </footer>
+    </div>
+  </body>
+</html>
